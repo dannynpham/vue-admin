@@ -1,6 +1,7 @@
 import * as types from '../../mutation-types'
 import lazyLoading from './lazyLoading'
 import charts from './charts'
+import users from './users'
 import uifeatures from './uifeatures'
 import components from './components'
 import tables from './tables'
@@ -31,6 +32,7 @@ const state = {
       component: lazyLoading('axios', true)
     },
     charts,
+    users,
     uifeatures,
     components,
     tables
@@ -38,6 +40,13 @@ const state = {
 }
 
 const mutations = {
+  STORE_USERS (state, users) {
+    users.forEach((user) => {
+      user.path = 'chartist'
+      user.meta = { link: 'charts/Chartist.vue' }
+      state.items.find(item => item.name === 'Users').children.push(user)
+    })
+  },
   [types.EXPAND_MENU] (state, menuItem) {
     if (menuItem.index > -1) {
       if (state.items[menuItem.index] && state.items[menuItem.index].meta) {

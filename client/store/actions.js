@@ -1,4 +1,5 @@
 import * as types from './mutation-types'
+import axios from 'axios'
 
 export const toggleSidebar = ({ commit }, config) => {
   if (config instanceof Object) {
@@ -19,4 +20,17 @@ export const switchEffect = ({ commit }, effectItem) => {
   if (effectItem) {
     commit(types.SWITCH_EFFECT, effectItem)
   }
+}
+
+export const storeUsers = ({ commit }, users) => {
+  return new Promise((resolve, reject) => {
+    axios.get('https://jsonplaceholder.typicode.com/users')
+    .then(res => {
+      commit('STORE_USERS', res.data)
+      resolve(res.data)
+    })
+    .catch(e => {
+      reject(e)
+    })
+  })
 }

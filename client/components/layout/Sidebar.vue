@@ -19,7 +19,6 @@
             <i class="fa fa-angle-down"></i>
           </span>
         </a>
-
         <expanding v-if="item.children && item.children.length">
           <ul v-show="isExpanded(item)">
             <li v-for="subItem in item.children" v-if="subItem.path">
@@ -54,6 +53,12 @@ export default {
   },
 
   mounted () {
+    this.storeUsers().then(data => {
+      console.log(`Successfully got users: ${data}`)
+    })
+    .catch(e => {
+      console.log(e)
+    })
     let route = this.$route
     if (route.name) {
       this.isReady = true
@@ -67,7 +72,8 @@ export default {
 
   methods: {
     ...mapActions([
-      'expandMenu'
+      'expandMenu',
+      'storeUsers'
     ]),
 
     isExpanded (item) {
